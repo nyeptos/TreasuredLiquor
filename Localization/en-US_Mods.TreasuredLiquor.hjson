@@ -1,0 +1,23 @@
+Buffs: {
+	AgedWineDebuff: {
+		DisplayName: Aged Wine Debuff
+		Description: Cannot drink any more
+	}
+
+	OldBottleDebuff: {
+		DisplayName: Old Bottle Debuff
+		Description: Cannot drink any more
+	}
+}
+
+Items: {
+	AgedWine: {
+		DisplayName: Aged Wine
+		Tooltip: Extends buff effect for 3 minutes
+	}
+
+	OldBottle: {
+		DisplayName: Old Bottle
+		Tooltip: "Remove one debuff at random"
+	}
+}

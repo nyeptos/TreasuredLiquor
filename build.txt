@@ -1,0 +1,3 @@
+displayName = Treasured Liquor
+author = nyeptos
+version = 0.1
