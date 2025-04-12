@@ -8,6 +8,11 @@ Buffs: {
 		DisplayName: Old Bottle Debuff
 		Description: Cannot drink any more
 	}
+
+	CrazyMilkBuff: {
+		DisplayName: Crazy Milk Buff
+		Description: Mods.TreasuredLiquor.Buffs.CrazyMilkBuff.Description
+	}
 }
 
 Items: {
@@ -18,6 +23,11 @@ Items: {
 
 	OldBottle: {
 		DisplayName: Old Bottle
-		Tooltip: "Remove one debuff at random"
+		Tooltip: Remove one debuff at random
+	}
+
+	CrazyMilk: {
+		DisplayName: Crazy Milk
+		Tooltip: ""
 	}
 }

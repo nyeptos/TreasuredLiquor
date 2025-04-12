@@ -1,1 +1,5 @@
 This mod adds some useful potions.
+1.AgedWine
+This item extends bufftime for 3 minutes.
+2.OldBottle
+This item erase one debuff randomly.

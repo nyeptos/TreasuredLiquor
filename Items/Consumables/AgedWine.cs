@@ -86,8 +86,8 @@ namespace TreasuredLiquor.Items.Consumables
         {
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.BottledWater);
-            recipe.AddIngredient(ItemID.Grapes, 5); 
-            recipe.AddTile(TileID.Kegs); 
+            recipe.AddIngredient(ItemID.Grapes, 5);
+            recipe.AddTile(TileID.Kegs);
             recipe.Register();
         }
     }
