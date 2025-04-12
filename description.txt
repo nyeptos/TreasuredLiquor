@@ -3,3 +3,5 @@ This mod adds some useful potions.
 This item extends bufftime for 3 minutes.
 2.OldBottle
 This item erase one debuff randomly.
+3.CrazyMilk
+This item makes you break walls very faster.
