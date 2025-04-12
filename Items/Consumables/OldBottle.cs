@@ -82,7 +82,7 @@ namespace TreasuredLiquor.Items.Consumables
             recipe.AddIngredient(ItemID.Mushroom, 2);
             recipe.AddIngredient(ItemID.Deathweed);
             recipe.AddIngredient(ItemID.Ale);
-            recipe.AddTile(TileID.Bottles);
+            recipe.AddTile(TileID.Kegs);
             recipe.Register();
         }
     }
