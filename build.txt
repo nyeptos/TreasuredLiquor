@@ -1,4 +1,4 @@
 displayName = Treasured Liquor
 author = nyeptos
-version = 0.2
+version = 0.2.1
 description = This mod adds some useful potions.
