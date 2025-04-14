@@ -36,10 +36,10 @@ public class CrazyMilk : ModItem
     public override void AddRecipes()
     {
         Recipe recipe = CreateRecipe();
-        recipe.AddIngredient(ItemID.MilkCarton, 1); 
+        recipe.AddIngredient(ItemID.MilkCarton, 1);
         recipe.AddIngredient(ItemID.Bottle, 1);
-        recipe.AddIngredient(ItemID.Blinkroot, 2); 
-        recipe.AddTile(TileID.Kegs); 
+        recipe.AddIngredient(ItemID.Blinkroot, 2);
+        recipe.AddTile(TileID.Kegs);
         recipe.Register();
     }
 }

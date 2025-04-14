@@ -11,7 +11,7 @@ Buffs: {
 
 	CrazyMilkBuff: {
 		DisplayName: Crazy Milk Buff
-		Description: Mods.TreasuredLiquor.Buffs.CrazyMilkBuff.Description
+		Description: The hammer is light
 	}
 }
 
@@ -28,6 +28,6 @@ Items: {
 
 	CrazyMilk: {
 		DisplayName: Crazy Milk
-		Tooltip: ""
+		Tooltip: Break walls faster
 	}
 }

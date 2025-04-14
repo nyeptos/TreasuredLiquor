@@ -20,11 +20,11 @@ namespace TreasuredLiquor.Globals
         {
             if (item.hammer > 0 && player.GetModPlayer<WallBreakerPlayer>().WallBreaker)
             {
-                item.hammer = originalHammerPower + 150; // +50％強化
+                item.hammer = originalHammerPower + 10; 
             }
             else
             {
-                item.hammer = originalHammerPower; // 元に戻す
+                item.hammer = originalHammerPower; 
             }
         }
         public override float UseSpeedMultiplier(Item item, Player player)
@@ -39,7 +39,7 @@ namespace TreasuredLiquor.Globals
         {
             if (item.hammer > 0 && player.GetModPlayer<WallBreakerPlayer>().WallBreaker)
             {
-                damage *= 0.5f; // 攻撃力を半分に！
+                damage *= 0.1f; 
             }
         }
         public override void ModifyWeaponCrit(Item item, Player player, ref float crit)
