@@ -80,14 +80,26 @@ namespace TreasuredLiquor.Items.Accessories
 
     public class PotionSlot
     {
-        public Item Potion;
-        public IPotionUseCondition Condition;
+        public Item Potion = new Item();
+        public List<IPotionUseCondition> Conditions = new(); // 複数条件
+        public bool UseAnd = true; // true: AND, false: OR
+
+        public bool ShouldUse(Player player)
+        {
+            if (UseAnd)
+            {
+                return Conditions.All(cond => cond.ShouldUse(player, Potion));
+            }
+            else
+            {
+                return Conditions.Any(cond => cond.ShouldUse(player, Potion));
+            }
+        }
 
         public PotionSlot()
         {
-             Potion = new Item();
-             Potion.TurnToAir();
-             Condition = new AlwaysUseCondition(); // デフォルト：常に使う
+            Potion.TurnToAir();
+            Conditions.Add(new AlwaysUseCondition());
         }
     }
 }

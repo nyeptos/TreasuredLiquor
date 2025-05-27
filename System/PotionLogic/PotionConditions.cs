@@ -1,12 +1,21 @@
-using Terraria.ID;
-using Terraria;
-using Microsoft.Xna.Framework;
-
 namespace TreasuredLiquor.Systems.PotionLogic
 {
     public interface IPotionUseCondition
     {
         bool ShouldUse(Player player, Item potion);
+    }
+
+    public class AlwaysUseCondition : IPotionUseCondition
+    {
+        public bool ShouldUse(Player player, Item potion) => true;
+    }
+
+    public class BuffMissingCondition : IPotionUseCondition
+    {
+        public bool ShouldUse(Player player, Item potion)
+        {
+            return potion.buffType > 0 && !player.HasBuff(potion.buffType);
+        }
     }
 
     public class BuffExpiredCondition : IPotionUseCondition
@@ -43,33 +52,34 @@ namespace TreasuredLiquor.Systems.PotionLogic
     {
         private float detectionRadius;
 
-        public EnemyNearbyCondition(float radius)
+        public EnemyNearbyCondition(float radius = 600f)
         {
             detectionRadius = radius;
         }
+
         public bool ShouldUse(Player player, Item potion)
         {
             foreach (NPC npc in Main.npc)
             {
-                if (npc.active && npc.CanBeChasedBy() && !npc.friendly && Vector2.Distance(player.Center, npc.Center) <= detectionRadius)
+                if (npc.active && npc.CanBeChasedBy() && !npc.friendly &&
+                    Vector2.Distance(player.Center, npc.Center) <= detectionRadius)
                 {
                     return true;
                 }
             }
             return false;
         }
+    }
 
-        public class AlwaysUseCondition : IPotionUseCondition
+    public static class PotionConditionRegistry
+    {
+        public static List<Type> RegisteredConditions = new List<Type>
         {
-            public bool ShouldUse(Player player, Item potion) => true;
-        }
-
-        public class BuffMissingCondition : IPotionUseCondition
-        {
-            public bool ShouldUse(Player player, Item potion)
-            {
-                return potion.buffType > 0 && !player.HasBuff(potion.buffType);
-            }
-        }
+            typeof(AlwaysUseCondition),
+            typeof(BuffMissingCondition),
+            typeof(EnemyNearbyCondition),
+            typeof(BuffExpiredCondition),
+            typeof(DebuffDetectedCondition)
+        };
     }
 }

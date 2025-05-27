@@ -1,26 +1,26 @@
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
 using Terraria;
+using Terraria.ID;
 using Terraria.UI;
 using Microsoft.Xna.Framework.Input;
 using Terraria.GameInput;
-using TreasuredLiquor.Systems;
-using Terraria.ID;
+using TreasuredLiquor.Systems.UI;
 
 namespace TreasuredLiquor
 {
     public class TreasuredLiquor : Mod
     {
-        public static ModKeybind OpenHipFlaskUIHotkey;
+        public static ModKeybind ToggleHipFlaskUIKeybind;
 
         public override void Load()
         {
-            OpenHipFlaskUIHotkey = KeybindLoader.RegisterKeybind(this, "Open Hip Flask UI", "K");
+            // ホットキー登録（例: Hキー）
+            ToggleHipFlaskUIKeybind = KeybindLoader.RegisterKeybind(this, "Toggle HipFlask UI", "H");
         }
 
         public override void Unload()
         {
-            OpenHipFlaskUIHotkey = null;
+            ToggleHipFlaskUIKeybind = null;
         }
     }
 }

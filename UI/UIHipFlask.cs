@@ -1,39 +1,64 @@
-using Terraria;
 using Terraria.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using ReLogic.Graphics;
 using Terraria.GameContent;
+using Terraria.ModLoader;
 using TreasuredLiquor.Items.Accessories;
-using Terraria.GameContent.UI.Elements;
 
 namespace TreasuredLiquor.UI
 {
     public class UIHipFlask : UIState
     {
-        private UIPanel mainPanel;
-        private List<UIHipFlaskSlot> slotElements;
+        private DraggableUIPanel panel;
 
         public override void OnInitialize()
         {
-            mainPanel = new UIPanel();
-            mainPanel.SetPadding(10);
-            mainPanel.Width.Set(300f, 0f);
-            mainPanel.Height.Set(150f, 0f);
-            mainPanel.Left.Set(400f, 0f); // X座標
-            mainPanel.Top.Set(200f, 0f);  // Y座標
-            Append(mainPanel);
+            panel = new DraggableUIPanel();
+            panel.SetPadding(10);
+            panel.Left.Set(400f, 0f);
+            panel.Top.Set(100f, 0f);
+            panel.Width.Set(300f, 0f);
+            panel.Height.Set(200f, 0f);
+            panel.BackgroundColor = new Color(73, 94, 171);
 
-            slotElements = new List<UIHipFlaskSlot>();
+            Append(panel);
 
             for (int i = 0; i < HipFlask.MaxSlots; i++)
             {
                 var slot = new UIHipFlaskSlot(i);
-                slot.Left.Set(i * 50f, 0f); // スロットを横に並べる
-                slot.Top.Set(10f, 0f);
-                mainPanel.Append(slot);
-                slotElements.Add(slot);
+                slot.Top.Set(10 + i * 40, 0f); // スロット間隔
+                slot.Left.Set(10, 0f);
+                panel.Append(slot);
+            }
+        }
+    }
+
+    public class DraggableUIPanel : UIPanel
+    {
+        private Vector2 offset;
+        private bool dragging;
+
+        public override void MouseDown(UIMouseEvent evt)
+        {
+            base.MouseDown(evt);
+            offset = new Vector2(evt.MousePosition.X - Left.Pixels, evt.MousePosition.Y - Top.Pixels);
+            dragging = true;
+        }
+
+        public override void MouseUp(UIMouseEvent evt)
+        {
+            base.MouseUp(evt);
+            dragging = false;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (dragging)
+            {
+                Left.Set(Main.mouseX - offset.X, 0f);
+                Top.Set(Main.mouseY - offset.Y, 0f);
+                Recalculate();
             }
         }
     }
