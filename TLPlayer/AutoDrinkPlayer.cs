@@ -8,49 +8,19 @@ namespace TreasuredLiquor.Common.Players
 {
     public class AutoDrinkPlayer : ModPlayer
     {
-        private int potionCheckTimer = 0;
-
         public override void PostUpdate()
         {
-            potionCheckTimer++;
-            if (potionCheckTimer >= 60) // 毎秒実行（60tickごと）
+            foreach (Item item in Player.inventory)
             {
-                TryAutoUsePotions();
-                potionCheckTimer = 0;
-            }
-        }
-
-        private void TryAutoUsePotions()
-        {
-            // アクセサリスロットから HipFlask を探す
-            for (int i = 0; i < Player.armor.Length; i++)
-            {
-                Item item = Player.armor[i];
-                if (item?.ModItem is HipFlask flask)
+                if (item.ModItem is HipFlask flask && flask.storedPotions[0]?.stack > 0)
                 {
-                    foreach (var slot in flask.PotionSlots)
+                    var potion = flask.storedPotions[0];
+                    if (potion.buffType > 0 && !Player.HasBuff(potion.buffType))
                     {
-                        if (slot?.Potion == null || slot.Potion.IsAir)
-                            continue;
-
-                        if (slot.Condition?.ShouldUse(Player, slot.Potion) == true)
-                        {
-                            TryUsePotion(slot.Potion);
-                        }
+                        Player.AddBuff(potion.buffType, potion.buffTime); 
+                        potion.stack--;
                     }
                 }
-            }
-        }
-
-        private void TryUsePotion(Item potion)
-        {
-            // ポーション使用条件チェック（クールダウンなど）
-            if (Player.itemAnimation > 0 || Player.potionDelay > 0)
-                return;
-
-            if (potion?.consumable == true && potion.useStyle > 0)
-            {
-
             }
         }
     }

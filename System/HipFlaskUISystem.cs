@@ -9,57 +9,42 @@ namespace TreasuredLiquor.Systems
 {
     public class HipFlaskUISystem : ModSystem
     {
-        internal static UserInterface HipFlaskInterface;
-        internal static UIHipFlask HipFlaskUI;
-        private static bool Visible;
+        public static UserInterface hipflaskInterface;
+        public static UIHipFlask hipflaskUI;   
 
         public override void Load()
         {
-            if (!Main.dedServ)
-            {
-                HipFlaskInterface = new UserInterface();
-                HipFlaskUI = new UIHipFlask();
-                HipFlaskUI.Activate();
-            }
+            hipflaskUI = new UIHipFlask();
+            hipflaskUI.Activate();
+            hipflaskInterface = new UserInterface();
         }
 
         public override void UpdateUI(GameTime gameTime)
         {
-            if (Visible && HipFlaskInterface?.CurrentState != null)
+            if (UIHipFlask.Visible)
             {
-                HipFlaskInterface.Update(gameTime);
+                hipflaskInterface?.Update(gameTime);
             }
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
-            int inventoryLayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
-
-            if (inventoryLayerIndex != -1 && Visible)
+            int mouseTextLayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+            if (mouseTextLayerIndex != -1 && UIHipFlask.Visible)
             {
-                layers.Insert(inventoryLayerIndex, new LegacyGameInterfaceLayer(
-                    "TreasuredLiquor: HipFlaskUI",
-                    delegate
+                layers.Insert(mouseTextLayerIndex, new LegacyGameInterfaceLayer(
+                    "Hipflask UI", () =>
                     {
-                        HipFlaskInterface.Draw(Main.spriteBatch, new GameTime());
+                        hipflaskInterface.Draw(Main.spriteBatch, new GameTime());
                         return true;
                     },
-                    InterfaceScaleType.UI)
-                );
+                    InterfaceScaleType.UI));
             }
         }
 
         public static void ToggleUI()
         {
-            Visible = !Visible;
-            if (Visible)
-            {
-                HipFlaskInterface?.SetState(HipFlaskUI);
-            }
-            else
-            {
-                HipFlaskInterface?.SetState(null);
-            }
+            UIHipFlask.Visible = !UIHipFlask.Visible;
         }
     }
 }

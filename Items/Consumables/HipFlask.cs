@@ -7,99 +7,40 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
-using static TreasuredLiquor.Systems.PotionLogic.EnemyNearbyCondition;
-using TreasuredLiquor.Systems.PotionLogic;
-using static TreasuredLiquor.Items.Accessories.HipFlask;
+using TreasuredLiquor.Systems;
 
 namespace TreasuredLiquor.Items.Accessories
 {
     public class HipFlask : ModItem
     {
-        public const int MaxSlots = 5;
-        public List<PotionSlot> PotionSlots;
+        public Item[] StoredPotions = new Item[1];
 
         public override void SetDefaults()
         {
             Item.width = 28;
             Item.height = 28;
             Item.accessory = true;
-            Item.rare = ItemRarityID.Orange;
-            Item.value = Item.sellPrice(gold: 2);
+            Item.value = Item.sellPrice(gold: 1);
+            Item.rare = ItemRarityID.Green;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.useAnimation = 15;
+            Item.useTime = 15;
+            Item.consumable = false; // アクセサリなので消耗しない
         }
-        public override void OnCreated(ItemCreationContext context)
+
+        public override void RightClick(Player player)
         {
-            base.OnCreated(context);
-            PotionSlots = new List<PotionSlot>();
-            for (int i = 0; i < MaxSlots; i++)
-            {
-                PotionSlots.Add(new PotionSlot());
-            }
+            HipFlaskUISystem.ToggleUI();
         }
 
         public override void SaveData(TagCompound tag)
         {
-            tag["PotionSlots"] = PotionSlots.Select(slot => new TagCompound
-            {
-                ["Item"] = ItemIO.Save(slot.Potion),
-                ["Condition"] = slot.Condition.GetType().FullName // 条件の型名を保存
-            }).ToList();
+            if (StoredPotions[0]! = null) tag["potion"] = ItemIO.Save(StoredPotions[0]);
         }
 
         public override void LoadData(TagCompound tag)
         {
-            var list = tag.GetList<TagCompound>("PotionSlots");
-            PotionSlots = new List<PotionSlot>();
-
-            foreach (var entry in list)
-            {
-                var slot = new PotionSlot
-                {
-                    Potion = ItemIO.Load(entry.GetCompound("Item"))
-                };
-
-                string condTypeName = entry.GetString("Condition");
-                Type condType = Mod.Code?.GetType(condTypeName);
-                if (condType != null && typeof(IPotionUseCondition).IsAssignableFrom(condType))
-                {
-                    slot.Condition = (IPotionUseCondition)Activator.CreateInstance(condType);
-                }
-                else
-                {
-                    slot.Condition = new AlwaysUseCondition(); // fallback
-                }
-
-                PotionSlots.Add(slot);
-            }
-
-            while (PotionSlots.Count < MaxSlots)
-            {
-                PotionSlots.Add(new PotionSlot());
-            }
-        }
-    }
-
-    public class PotionSlot
-    {
-        public Item Potion = new Item();
-        public List<IPotionUseCondition> Conditions = new(); // 複数条件
-        public bool UseAnd = true; // true: AND, false: OR
-
-        public bool ShouldUse(Player player)
-        {
-            if (UseAnd)
-            {
-                return Conditions.All(cond => cond.ShouldUse(player, Potion));
-            }
-            else
-            {
-                return Conditions.Any(cond => cond.ShouldUse(player, Potion));
-            }
-        }
-
-        public PotionSlot()
-        {
-            Potion.TurnToAir();
-            Conditions.Add(new AlwaysUseCondition());
+            if (tag.ContainsKey("potion")) storedPotions[0] = ItemIO.Load(tag.GetCompound("potion"));
         }
     }
 }
