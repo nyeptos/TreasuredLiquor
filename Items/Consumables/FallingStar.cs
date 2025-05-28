@@ -5,8 +5,7 @@ using TreasuredLiquor.Buffs.Alcohol;
 
 namespace TreasuredLiquor.Items.Consumables
 {
-
-    public class HipFlask : ModItem
+    public class FallingStar : ModItem
     {
         public override void SetDefaults()
         {
@@ -19,18 +18,18 @@ namespace TreasuredLiquor.Items.Consumables
             Item.UseSound = SoundID.Item3;
             Item.maxStack = 30;
             Item.consumable = true;
-            Item.rare = ItemRarityID.Orange;
+            Item.rare = ItemRarityID.LightRed;
             Item.value = Item.buyPrice(silver: 5);
-            Item.buffType = ModContent.BuffType<AntiSuffocationBuff>();
-            Item.buffTime = 60 * 60; // 60秒
+            Item.buffType = ModContent.BuffType<FastFallBuff>();
+            Item.buffTime = 1800; // 30秒
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient(ItemID.BottledWater)
-                .AddIngredient(ItemID.SandBlock, 10)
-                .AddIngredient(ItemID.Cactus)
+                .AddIngredient(ItemID.Feather, 3)
+                .AddIngredient(ItemID.FallenStar)
                 .AddTile(TileID.Bottles)
                 .Register();
         }

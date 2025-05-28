@@ -13,6 +13,16 @@ Buffs: {
 		DisplayName: Crazy Milk Buff
 		Description: The hammer is light
 	}
+
+	AntiSuffocationBuff: {
+		DisplayName: Anti Suffocation Buff
+		Description: Mods.TreasuredLiquor.Buffs.AntiSuffocationBuff.Description
+	}
+
+	FastFallBuff: {
+		DisplayName: Fast Fall Buff
+		Description: Mods.TreasuredLiquor.Buffs.FastFallBuff.Description
+	}
 }
 
 Items: {
@@ -30,4 +40,16 @@ Items: {
 		DisplayName: Crazy Milk
 		Tooltip: Break walls faster
 	}
+
+	HipFlask: {
+		DisplayName: Hip Flask
+		Tooltip: ""
+	}
+
+	FallingStar: {
+		DisplayName: Falling Star
+		Tooltip: ""
+	}
 }
+
+"Keybinds.Toggle HipFlask UI.DisplayName": Toggle  Hip Flask  U I

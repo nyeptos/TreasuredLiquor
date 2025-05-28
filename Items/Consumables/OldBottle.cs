@@ -56,11 +56,16 @@ namespace TreasuredLiquor.Items.Consumables
 
                 if (removableDebuffs.Count > 0)
                 {
-                    var randomBuff = new Random();
-                    int randomIndex = randomBuff.Next(removableDebuffs.Count);
-                    int debuffToRemove = removableDebuffs[randomIndex];
-                    player.DelBuff(player.FindBuffIndex(debuffToRemove));
+                    int countToRemove = Math.Min(3, removableDebuffs.Count);
+                    var rng = new Random();
+                    var debuffsToRemove = removableDebuffs.OrderBy(_ => rng.Next()).Take(countToRemove).ToList();
+
+                    foreach (var debuffId in debuffsToRemove)
+                    {
+                        player.DelBuff(player.FindBuffIndex(debuffId));
+                    }
                 }
+
                 player.AddBuff(ModContent.BuffType<OldBottleDebuff>(), 10800);
                 return true;
             }
