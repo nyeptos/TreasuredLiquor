@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using TreasuredLiquor.Items.Accessories;
+using Terraria.GameContent.UI.Elements;
+using Terraria;
 
 namespace TreasuredLiquor.UI
 {
@@ -38,16 +40,16 @@ namespace TreasuredLiquor.UI
         private Vector2 offset;
         private bool dragging;
 
-        public override void MouseDown(UIMouseEvent evt)
+        public override void LeftMouseDown(UIMouseEvent evt) // 修正: 正しいメソッド名に変更
         {
-            base.MouseDown(evt);
+            base.LeftMouseDown(evt);
             offset = new Vector2(evt.MousePosition.X - Left.Pixels, evt.MousePosition.Y - Top.Pixels);
             dragging = true;
         }
 
-        public override void MouseUp(UIMouseEvent evt)
+        public override void LeftMouseUp(UIMouseEvent evt) // 修正: 正しいメソッド名に変更
         {
-            base.MouseUp(evt);
+            base.LeftMouseUp(evt);
             dragging = false;
         }
 

@@ -10,6 +10,8 @@ using TreasuredLiquor.Items.Accessories;
 using TreasuredLiquor.Systems.PotionLogic;
 using System;
 using System.Collections.Generic;
+using Terraria.GameContent.UI.Elements;
+using System.Linq;
 
 namespace TreasuredLiquor.UI
 {
@@ -162,6 +164,25 @@ namespace TreasuredLiquor.UI
                     }
                 }
             }
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            if (Main.mouseItem.IsAir && !item.IsAir)
+            {
+                Main.mouseItem = item.Clone();
+                item.TurnToAir();
+            }
+            else if (!Main.mouseItem.IsAir)
+            {
+                Item temp = item.Clone();
+                item = Main.mouseItem.Clone();
+                Main.mouseItem = temp;
+            }
+
+            UpdateHipFlaskSlot();
         }
     }
 }

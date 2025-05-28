@@ -22,6 +22,7 @@ namespace TreasuredLiquor.Common.Players
 
         private void TryAutoUsePotions()
         {
+            // アクセサリスロットから HipFlask を探す
             for (int i = 0; i < Player.armor.Length; i++)
             {
                 Item item = Player.armor[i];
@@ -43,21 +44,13 @@ namespace TreasuredLiquor.Common.Players
 
         private void TryUsePotion(Item potion)
         {
+            // ポーション使用条件チェック（クールダウンなど）
             if (Player.itemAnimation > 0 || Player.potionDelay > 0)
                 return;
 
             if (potion?.consumable == true && potion.useStyle > 0)
             {
-                Player.QuickBuff(); // 将来的に個別使用に変えても良い
-                Player.ConsumeItem(potion.type);
-            }
-        }
 
-        public override void ProcessTriggers(TriggersSet triggersSet)
-        {
-            if (TreasuredLiquor.OpenHipFlaskUIHotkey.JustPressed)
-            {
-                HipFlaskUIManager.ToggleUI();
             }
         }
     }

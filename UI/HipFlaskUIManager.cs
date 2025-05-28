@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
+using TreasuredLiquor.UI;
 
 namespace TreasuredLiquor.Systems.UI
 {
